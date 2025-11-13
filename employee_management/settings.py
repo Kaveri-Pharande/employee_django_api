@@ -1,10 +1,9 @@
 """
-Django settings for employee_management project (Render + MySQL ready).
+Django settings for employee_management project (Render + Railway MySQL ready).
 """
 
 import os
 from pathlib import Path
-import dj_database_url  # ✅ Parse Render DATABASE_URL
 
 # --- Base Directory ---
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,12 +67,19 @@ TEMPLATES = [
 # --- WSGI ---
 WSGI_APPLICATION = 'employee_management.wsgi.application'
 
-# --- Database (Render MySQL via DATABASE_URL) ---
+# --- Database (Railway MySQL Connection) ---
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),  # Render automatically provides this
-        conn_max_age=600,  # Keep DB connections open for performance
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',   # from your Railway URL
+        'USER': 'root',      # from your Railway URL
+        'PASSWORD': 'tgTOpfLpKhqCIOmQYNMyCINfTulagtdH',  # from your Railway URL
+        'HOST': 'shortline.proxy.rlwy.net',  # from your Railway URL
+        'PORT': '54664',     # from your Railway URL
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
 }
 
 # --- Password Validation ---
@@ -92,16 +98,4 @@ USE_TZ = True
 
 # --- Static Files (CSS, JS, Images) ---
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# WhiteNoise handles static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# --- CORS Settings (for React frontend) ---
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # your local React app
-]
-CORS_ALLOW_CREDENTIALS = True
-
-# --- Default Primary Key Field ---
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_ROOT = os._
