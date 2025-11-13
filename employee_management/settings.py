@@ -98,4 +98,4 @@ USE_TZ = True
 
 # --- Static Files (CSS, JS, Images) ---
 STATIC_URL = '/static/'
-STATIC_ROOT = os._
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
